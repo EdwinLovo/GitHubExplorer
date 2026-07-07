@@ -1,3 +1,7 @@
 <resources>
     <string name="app_name">GitHubExplorer</string>
+    <string name="generic_error">Something went wrong. Please try again.</string>
+    <string name="error_alert_title">Something went wrong</string>
+    <string name="error_alert_dismiss">OK</string>
+    <string name="home_title">Home</string>
 </resources>
