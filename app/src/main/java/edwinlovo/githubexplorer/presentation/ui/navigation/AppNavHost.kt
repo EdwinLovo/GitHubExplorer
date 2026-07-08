@@ -6,8 +6,8 @@ import androidx.compose.ui.Modifier
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
-import edwinlovo.githubexplorer.presentation.ux.home.HomeRoute
-import edwinlovo.githubexplorer.presentation.ux.home.HomeScreen
+import edwinlovo.githubexplorer.presentation.ux.explore.ExploreRoute
+import edwinlovo.githubexplorer.presentation.ux.explore.ExploreScreen
 
 @Composable
 fun AppNavHost(
@@ -19,7 +19,6 @@ fun AppNavHost(
         startDestination = startDestination,
         modifier = Modifier.systemBarsPadding(),
     ) {
-        // Home
-        composable<HomeRoute> { HomeScreen(navController) }
+        composable<ExploreRoute> { ExploreScreen(navController) }
     }
 }

@@ -1,5 +1,7 @@
 package edwinlovo.githubexplorer.presentation.utils
 
+import edwinlovo.githubexplorer.R
+
 /**
  * Every icon in the app is registered here — do not use Material Icons or import `Icons.*`.
  *
@@ -10,6 +12,7 @@ package edwinlovo.githubexplorer.presentation.utils
  *    or `Image(painterResource(GheIcons.SomeArt))` for full-color raster images.
  */
 object GheIcons {
-    // val Settings = R.drawable.ic_settings
-    // val Search = R.drawable.ic_search
+    val Close = R.drawable.ic_close
+    val Search = R.drawable.ic_search
+    val Star = R.drawable.ic_star
 }

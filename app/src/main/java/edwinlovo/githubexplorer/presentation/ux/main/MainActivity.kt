@@ -7,7 +7,7 @@ import androidx.activity.viewModels
 import androidx.navigation.compose.rememberNavController
 import dagger.hilt.android.AndroidEntryPoint
 import edwinlovo.githubexplorer.presentation.ui.theme.GheTheme
-import edwinlovo.githubexplorer.presentation.ux.home.HomeRoute
+import edwinlovo.githubexplorer.presentation.ux.explore.ExploreRoute
 
 @AndroidEntryPoint
 class MainActivity : ComponentActivity() {
@@ -21,7 +21,7 @@ class MainActivity : ComponentActivity() {
                 MainScreen(
                     navController = navController,
                     viewModel = viewModel,
-                    startDestination = HomeRoute,
+                    startDestination = ExploreRoute,
                 )
             }
         }

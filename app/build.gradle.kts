@@ -34,6 +34,7 @@ android {
 		targetCompatibility = JavaVersion.VERSION_11
 	}
 	buildFeatures {
+		buildConfig = true
 		compose = true
 	}
 }
@@ -67,6 +68,8 @@ dependencies {
 	implementation(libs.okhttp.logging.interceptor)
 	implementation(libs.androidx.paging.runtime)
 	implementation(libs.androidx.paging.compose)
+	implementation(libs.coil.compose)
+	implementation(libs.coil.network.okhttp)
 	implementation(libs.timber)
 	testImplementation(libs.junit)
 	testImplementation(libs.turbine)
