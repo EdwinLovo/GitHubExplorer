@@ -25,9 +25,11 @@ import coil3.compose.AsyncImage
 import edwinlovo.githubexplorer.R
 import edwinlovo.githubexplorer.domain.model.response.search.GithubRepo
 import edwinlovo.githubexplorer.presentation.ui.theme.GheTheme
+import edwinlovo.githubexplorer.presentation.utils.ABSOLUTE_WEIGHT
 import edwinlovo.githubexplorer.presentation.utils.GheIcons
 import edwinlovo.githubexplorer.presentation.utils.GhePreview
 import edwinlovo.githubexplorer.presentation.utils.GitHubExplorerPreviewContainer
+import edwinlovo.githubexplorer.presentation.utils.MAX_LINES_SINGLE
 import edwinlovo.githubexplorer.presentation.ux.explore.utils.previewRepos
 
 private const val DESCRIPTION_MAX_LINES = 2
@@ -54,19 +56,19 @@ internal fun RepoListItem(
                     .clip(CircleShape),
             )
             Spacer(modifier = Modifier.width(GheTheme.spacing.md))
-            Column(modifier = Modifier.weight(1f)) {
+            Column(modifier = Modifier.weight(ABSOLUTE_WEIGHT)) {
                 Text(
                     text = repo.name,
                     style = MaterialTheme.typography.titleMedium,
                     color = GheTheme.colors.textDefault,
-                    maxLines = 1,
+                    maxLines = MAX_LINES_SINGLE,
                     overflow = TextOverflow.Ellipsis,
                 )
                 Text(
                     text = repo.ownerLogin,
                     style = MaterialTheme.typography.bodySmall,
                     color = GheTheme.colors.textMuted,
-                    maxLines = 1,
+                    maxLines = MAX_LINES_SINGLE,
                     overflow = TextOverflow.Ellipsis,
                 )
                 repo.description?.takeIf { it.isNotBlank() }?.let { description ->

@@ -1,6 +1,18 @@
 package edwinlovo.githubexplorer.presentation.ux.explore.utils
 
+import androidx.paging.LoadState
+import androidx.paging.LoadStates
+import androidx.paging.PagingData
 import edwinlovo.githubexplorer.domain.model.response.search.GithubRepo
+
+internal fun previewPagingData(refresh: LoadState): PagingData<GithubRepo> =
+    PagingData.empty(
+        sourceLoadStates = LoadStates(
+            refresh = refresh,
+            prepend = LoadState.NotLoading(endOfPaginationReached = true),
+            append = LoadState.NotLoading(endOfPaginationReached = true),
+        ),
+    )
 
 internal fun previewRepos(): List<GithubRepo> = listOf(
     GithubRepo(
