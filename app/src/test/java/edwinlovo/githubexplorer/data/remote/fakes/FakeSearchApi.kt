@@ -3,10 +3,17 @@ package edwinlovo.githubexplorer.data.remote.fakes
 import edwinlovo.githubexplorer.data.remote.api.SearchApi
 import edwinlovo.githubexplorer.domain.model.response.search.GithubOwnerDto
 import edwinlovo.githubexplorer.domain.model.response.search.GithubRepoDto
+import edwinlovo.githubexplorer.domain.model.response.search.GithubUserDto
 import edwinlovo.githubexplorer.domain.model.response.search.SearchRepositoriesResponse
+import edwinlovo.githubexplorer.domain.model.response.search.SearchUsersResponse
 
 class FakeSearchApi : SearchApi {
     var response: SearchRepositoriesResponse = SearchRepositoriesResponse(
+        totalCount = 0,
+        incompleteResults = false,
+        items = emptyList(),
+    )
+    var usersResponse: SearchUsersResponse = SearchUsersResponse(
         totalCount = 0,
         incompleteResults = false,
         items = emptyList(),
@@ -22,6 +29,13 @@ class FakeSearchApi : SearchApi {
     var lastPage: Int? = null
         private set
     var lastPerPage: Int? = null
+        private set
+
+    var lastUsersQuery: String? = null
+        private set
+    var lastUsersPage: Int? = null
+        private set
+    var lastUsersPerPage: Int? = null
         private set
 
     override suspend fun searchRepositories(
@@ -40,6 +54,18 @@ class FakeSearchApi : SearchApi {
         return response
     }
 
+    override suspend fun searchUsers(
+        query: String,
+        page: Int,
+        perPage: Int,
+    ): SearchUsersResponse {
+        lastUsersQuery = query
+        lastUsersPage = page
+        lastUsersPerPage = perPage
+        exception?.let { throw it }
+        return usersResponse
+    }
+
     companion object {
         fun sampleRepo(id: Long, name: String = "repo-$id"): GithubRepoDto = GithubRepoDto(
             id = id,
@@ -53,6 +79,21 @@ class FakeSearchApi : SearchApi {
 
         fun sampleResponse(items: List<GithubRepoDto>, totalCount: Int = items.size) =
             SearchRepositoriesResponse(
+                totalCount = totalCount,
+                incompleteResults = false,
+                items = items,
+            )
+
+        fun sampleUser(id: Long, login: String = "user-$id", type: String = "User"): GithubUserDto =
+            GithubUserDto(
+                id = id,
+                login = login,
+                avatarUrl = "https://a.example/$id.png",
+                type = type,
+            )
+
+        fun sampleUsersResponse(items: List<GithubUserDto>, totalCount: Int = items.size) =
+            SearchUsersResponse(
                 totalCount = totalCount,
                 incompleteResults = false,
                 items = items,

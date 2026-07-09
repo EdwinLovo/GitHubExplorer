@@ -4,9 +4,11 @@ import androidx.paging.Pager
 import androidx.paging.PagingConfig
 import androidx.paging.PagingData
 import edwinlovo.githubexplorer.data.paging.SearchRepositoriesPagingSource
+import edwinlovo.githubexplorer.data.paging.SearchUsersPagingSource
 import edwinlovo.githubexplorer.data.remote.api.SearchApi
 import edwinlovo.githubexplorer.data.repository.BaseRepository
 import edwinlovo.githubexplorer.domain.model.response.search.GithubRepo
+import edwinlovo.githubexplorer.domain.model.response.search.GithubUser
 import edwinlovo.githubexplorer.domain.repository.SearchRepository
 import kotlinx.coroutines.flow.Flow
 import javax.inject.Inject
@@ -23,5 +25,15 @@ class SearchRepositoryImpl @Inject constructor(
                 enablePlaceholders = false,
             ),
             pagingSourceFactory = { SearchRepositoriesPagingSource(api, query) },
+        ).flow
+
+    override fun searchUsers(query: String): Flow<PagingData<GithubUser>> =
+        Pager(
+            config = PagingConfig(
+                pageSize = SearchUsersPagingSource.PAGE_SIZE,
+                initialLoadSize = SearchUsersPagingSource.PAGE_SIZE,
+                enablePlaceholders = false,
+            ),
+            pagingSourceFactory = { SearchUsersPagingSource(api, query) },
         ).flow
 }

@@ -1,4 +1,4 @@
-package edwinlovo.githubexplorer.presentation.ux.explore.components
+package edwinlovo.githubexplorer.presentation.ui.components.feedback
 
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box

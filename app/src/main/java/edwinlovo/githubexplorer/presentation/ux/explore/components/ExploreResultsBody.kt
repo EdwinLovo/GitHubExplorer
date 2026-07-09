@@ -14,6 +14,7 @@ import androidx.paging.compose.collectAsLazyPagingItems
 import androidx.paging.compose.itemKey
 import edwinlovo.githubexplorer.domain.model.response.search.GithubRepo
 import edwinlovo.githubexplorer.domain.utils.RateLimitedException
+import edwinlovo.githubexplorer.presentation.ui.components.feedback.PagingLoadStateFooter
 import edwinlovo.githubexplorer.presentation.utils.EMPTY_STRING
 import edwinlovo.githubexplorer.presentation.utils.GhePreview
 import edwinlovo.githubexplorer.presentation.utils.GitHubExplorerPreviewContainer
