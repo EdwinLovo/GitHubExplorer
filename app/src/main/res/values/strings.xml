@@ -9,5 +9,18 @@
     <string name="explore_search_clear">Clear search</string>
     <string name="explore_search_placeholder">Search repositories</string>
     <string name="generic_error">Something went wrong. Please try again.</string>
+    <string name="repodetail_back">Back</string>
+    <string name="repodetail_favorite_add">Add to favorites</string>
+    <string name="repodetail_favorite_remove">Remove from favorites</string>
+    <string name="repodetail_forks">Forks</string>
+    <string name="repodetail_last_updated">Last updated %1$s</string>
+    <string name="repodetail_license">License: %1$s</string>
+    <string name="repodetail_no_description">No description provided</string>
+    <string name="repodetail_open_in_browser">Open in browser</string>
+    <string name="repodetail_open_issues">Open issues</string>
+    <string name="repodetail_owner_avatar">%1$s avatar</string>
+    <string name="repodetail_stars">Stars</string>
+    <string name="repodetail_topics">Topics</string>
+    <string name="repodetail_watchers">Watchers</string>
     <string name="retry">Retry</string>
 </resources>

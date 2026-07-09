@@ -75,6 +75,7 @@ private fun ExploreScreenContent(
                 ExploreResultsBody(
                     query = uiState.searchQuery,
                     repos = repos,
+                    onRepoClick = { repo -> handleEvent(ExploreEvent.OnRepoClicked(repo)) },
                 )
             }
         }

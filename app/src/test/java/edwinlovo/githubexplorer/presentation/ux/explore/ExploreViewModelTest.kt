@@ -5,8 +5,10 @@ import app.cash.turbine.test
 import com.google.common.truth.Truth.assertThat
 import edwinlovo.githubexplorer.data.repository.fakes.FakeSearchRepository
 import edwinlovo.githubexplorer.domain.model.response.search.GithubRepo
+import edwinlovo.githubexplorer.presentation.ui.navigation.NavigationAction
 import edwinlovo.githubexplorer.presentation.utils.DEBOUNCE_TIME
 import edwinlovo.githubexplorer.presentation.ux.explore.contracts.ExploreEvent
+import edwinlovo.githubexplorer.presentation.ux.repodetail.RepoDetailRoute
 import edwinlovo.githubexplorer.testutil.MainDispatcherRule
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.cancel
@@ -99,6 +101,24 @@ class ExploreViewModelTest {
         assertThat(queries).contains("abc")
         assertThat(queries).doesNotContain("a")
         assertThat(queries).doesNotContain("ab")
+    }
+
+    @Test
+    fun handleEventOnRepoClickedEmitsNavigateToRepoDetail() = runTest(mainDispatcherRule.dispatcher) {
+        val repo = GithubRepo(1L, "compose", "google/compose", "google", "url", "desc", 12, "Kotlin")
+
+        viewModel.navigationActionFlow.test {
+            assertThat(awaitItem()).isNull()
+
+            viewModel.handleEvent(ExploreEvent.OnRepoClicked(repo))
+
+            val action = awaitItem()
+            assertThat(action).isEqualTo(
+                NavigationAction.Navigate(RepoDetailRoute(owner = "google", repo = "compose"))
+            )
+
+            cancelAndIgnoreRemainingEvents()
+        }
     }
 
     private fun sampleRepos(): List<GithubRepo> = listOf(

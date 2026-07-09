@@ -1,5 +1,6 @@
 package edwinlovo.githubexplorer.presentation.ux.explore.contracts
 
+import edwinlovo.githubexplorer.domain.model.response.search.GithubRepo
 import edwinlovo.githubexplorer.presentation.utils.EMPTY_STRING
 
 data class ExploreUiState(
@@ -9,4 +10,5 @@ data class ExploreUiState(
 sealed interface ExploreEvent {
     data class OnSearchQueryChanged(val query: String) : ExploreEvent
     data object OnClearSearchQuery : ExploreEvent
+    data class OnRepoClicked(val repo: GithubRepo) : ExploreEvent
 }

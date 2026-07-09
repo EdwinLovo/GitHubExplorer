@@ -14,6 +14,7 @@ import edwinlovo.githubexplorer.presentation.utils.EMPTY_STRING
 import edwinlovo.githubexplorer.presentation.utils.ext.reduce
 import edwinlovo.githubexplorer.presentation.ux.explore.contracts.ExploreEvent
 import edwinlovo.githubexplorer.presentation.ux.explore.contracts.ExploreUiState
+import edwinlovo.githubexplorer.presentation.ux.repodetail.RepoDetailRoute
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.FlowPreview
 import kotlinx.coroutines.flow.Flow
@@ -45,6 +46,7 @@ class ExploreViewModel @Inject constructor(
         when (event) {
             is ExploreEvent.OnSearchQueryChanged -> setSearchQuery(event.query)
             is ExploreEvent.OnClearSearchQuery -> clearSearchQuery()
+            is ExploreEvent.OnRepoClicked -> navigateToRepoDetail(event.repo)
         }
     }
 
@@ -54,5 +56,9 @@ class ExploreViewModel @Inject constructor(
 
     private fun clearSearchQuery() {
         uiState.reduce { copy(searchQuery = EMPTY_STRING) }
+    }
+
+    private fun navigateToRepoDetail(repo: GithubRepo) {
+        navigate(RepoDetailRoute(owner = repo.ownerLogin, repo = repo.name))
     }
 }

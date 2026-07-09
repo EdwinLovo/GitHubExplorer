@@ -12,7 +12,14 @@ import edwinlovo.githubexplorer.R
  *    or `Image(painterResource(GheIcons.SomeArt))` for full-color raster images.
  */
 object GheIcons {
+    val ArrowBack = R.drawable.ic_arrow_back
     val Close = R.drawable.ic_close
+    val Eye = R.drawable.ic_eye
+    val Favorite = R.drawable.ic_favorite
+    val FavoriteOutline = R.drawable.ic_favorite_outline
+    val Fork = R.drawable.ic_fork
+    val Issue = R.drawable.ic_issue
+    val OpenInNew = R.drawable.ic_open_in_new
     val Search = R.drawable.ic_search
     val Star = R.drawable.ic_star
 }

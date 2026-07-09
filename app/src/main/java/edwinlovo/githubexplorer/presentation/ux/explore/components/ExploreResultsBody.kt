@@ -25,6 +25,7 @@ import kotlinx.coroutines.flow.flowOf
 internal fun ExploreResultsBody(
     query: String,
     repos: LazyPagingItems<GithubRepo>,
+    onRepoClick: (GithubRepo) -> Unit,
 ) {
     val refreshState = repos.loadState.refresh
     when {
@@ -50,7 +51,7 @@ internal fun ExploreResultsBody(
                 ) { index ->
                     val repo = repos[index]
                     if (repo != null) {
-                        RepoListItem(repo = repo, onClick = {})
+                        RepoListItem(repo = repo, onClick = onRepoClick)
                     }
                 }
                 item {
@@ -71,6 +72,7 @@ private fun ExploreResultsBodyPopulatedPreview() {
         ExploreResultsBody(
             query = EMPTY_STRING,
             repos = flowOf(PagingData.from(previewRepos())).collectAsLazyPagingItems(),
+            onRepoClick = {},
         )
     }
 }
@@ -82,6 +84,7 @@ private fun ExploreResultsBodyLoadingPreview() {
         ExploreResultsBody(
             query = EMPTY_STRING,
             repos = flowOf(previewPagingData(refresh = LoadState.Loading)).collectAsLazyPagingItems(),
+            onRepoClick = {},
         )
     }
 }
@@ -93,6 +96,7 @@ private fun ExploreResultsBodyErrorPreview() {
         ExploreResultsBody(
             query = "compose",
             repos = flowOf(previewPagingData(refresh = LoadState.Error(RuntimeException("boom")))).collectAsLazyPagingItems(),
+            onRepoClick = {},
         )
     }
 }
@@ -104,6 +108,7 @@ private fun ExploreResultsBodyEmptyPreview() {
         ExploreResultsBody(
             query = "asdfgh",
             repos = flowOf(previewPagingData(refresh = LoadState.NotLoading(endOfPaginationReached = true))).collectAsLazyPagingItems(),
+            onRepoClick = {},
         )
     }
 }

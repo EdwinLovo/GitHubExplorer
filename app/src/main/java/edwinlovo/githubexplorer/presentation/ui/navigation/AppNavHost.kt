@@ -8,6 +8,8 @@ import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import edwinlovo.githubexplorer.presentation.ux.explore.ExploreRoute
 import edwinlovo.githubexplorer.presentation.ux.explore.ExploreScreen
+import edwinlovo.githubexplorer.presentation.ux.repodetail.RepoDetailRoute
+import edwinlovo.githubexplorer.presentation.ux.repodetail.RepoDetailScreen
 
 @Composable
 fun AppNavHost(
@@ -20,5 +22,6 @@ fun AppNavHost(
         modifier = Modifier.systemBarsPadding(),
     ) {
         composable<ExploreRoute> { ExploreScreen(navController) }
+        composable<RepoDetailRoute> { RepoDetailScreen(navController) }
     }
 }
