@@ -14,5 +14,6 @@ sealed interface RepoDetailEvent {
     data object OnBackClicked : RepoDetailEvent
     data object OnRetryClicked : RepoDetailEvent
     data object OnFavoriteToggled : RepoDetailEvent
+    data object OnOwnerClicked : RepoDetailEvent
     data class OnOpenInBrowserClicked(val url: String) : RepoDetailEvent
 }

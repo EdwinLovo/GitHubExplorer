@@ -7,9 +7,11 @@ import dagger.hilt.components.SingletonComponent
 import edwinlovo.githubexplorer.data.repository.favorites.FavoritesRepositoryImpl
 import edwinlovo.githubexplorer.data.repository.repos.RepoRepositoryImpl
 import edwinlovo.githubexplorer.data.repository.search.SearchRepositoryImpl
+import edwinlovo.githubexplorer.data.repository.users.UserRepositoryImpl
 import edwinlovo.githubexplorer.domain.repository.FavoritesRepository
 import edwinlovo.githubexplorer.domain.repository.RepoRepository
 import edwinlovo.githubexplorer.domain.repository.SearchRepository
+import edwinlovo.githubexplorer.domain.repository.UserRepository
 import javax.inject.Singleton
 
 @Module
@@ -27,4 +29,8 @@ abstract class RepositoryModule {
     @Binds
     @Singleton
     abstract fun bindFavoritesRepository(impl: FavoritesRepositoryImpl): FavoritesRepository
+
+    @Binds
+    @Singleton
+    abstract fun bindUserRepository(impl: UserRepositoryImpl): UserRepository
 }

@@ -10,6 +10,7 @@ import edwinlovo.githubexplorer.data.repository.fakes.FakeRepoRepository.Compani
 import edwinlovo.githubexplorer.domain.model.favorites.toFavoriteRepo
 import edwinlovo.githubexplorer.presentation.ui.navigation.NavigationAction
 import edwinlovo.githubexplorer.presentation.ux.repodetail.contracts.RepoDetailEvent
+import edwinlovo.githubexplorer.presentation.ux.userprofile.UserProfileRoute
 import edwinlovo.githubexplorer.testutil.MainDispatcherRule
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.cancel
@@ -124,6 +125,23 @@ class RepoDetailViewModelTest {
             vm.handleEvent(RepoDetailEvent.OnBackClicked)
             val action = awaitItem()
             assertThat(action).isInstanceOf(NavigationAction.PopBackStack::class.java)
+            cancelAndIgnoreRemainingEvents()
+        }
+    }
+
+    @Test
+    fun onOwnerClickedEmitsNavigateToUserProfile() = runTest(mainDispatcherRule.dispatcher) {
+        val details = sampleDetails(ownerLogin = "google")
+        repoRepository.setSuccess(details)
+        val vm = buildViewModel(owner = details.ownerLogin, repo = details.name)
+
+        vm.navigationActionFlow.test {
+            assertThat(awaitItem()).isNull()
+            vm.handleEvent(RepoDetailEvent.OnOwnerClicked)
+            val action = awaitItem()
+            assertThat(action).isEqualTo(
+                NavigationAction.Navigate(UserProfileRoute(username = "google"))
+            )
             cancelAndIgnoreRemainingEvents()
         }
     }

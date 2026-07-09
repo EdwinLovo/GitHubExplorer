@@ -14,6 +14,7 @@ import edwinlovo.githubexplorer.presentation.ui.navigation.ViewModelNavImpl
 import edwinlovo.githubexplorer.presentation.utils.ext.reduce
 import edwinlovo.githubexplorer.presentation.ux.repodetail.contracts.RepoDetailEvent
 import edwinlovo.githubexplorer.presentation.ux.repodetail.contracts.RepoDetailUiState
+import edwinlovo.githubexplorer.presentation.ux.userprofile.UserProfileRoute
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.launch
@@ -42,6 +43,7 @@ class RepoDetailViewModel @Inject constructor(
             is RepoDetailEvent.OnBackClicked -> popBackStack()
             is RepoDetailEvent.OnRetryClicked -> loadRepo()
             is RepoDetailEvent.OnFavoriteToggled -> toggleFavorite()
+            is RepoDetailEvent.OnOwnerClicked -> navigateToOwner()
             is RepoDetailEvent.OnOpenInBrowserClicked -> Unit
         }
     }
@@ -71,6 +73,11 @@ class RepoDetailViewModel @Inject constructor(
                 uiState.reduce { copy(isFavorite = isFavorite) }
             }
         }
+    }
+
+    private fun navigateToOwner() {
+        val ownerLogin = uiState.value.repo?.ownerLogin ?: return
+        navigate(UserProfileRoute(username = ownerLogin))
     }
 
     private fun toggleFavorite() {

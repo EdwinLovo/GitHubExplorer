@@ -17,6 +17,7 @@ import edwinlovo.githubexplorer.presentation.ux.repodetail.utils.previewRepoDeta
 @Composable
 internal fun RepoDetailContentBody(
     repo: RepoDetails,
+    onOwnerClicked: () -> Unit,
     modifier: Modifier = Modifier,
 ) {
     Column(
@@ -24,7 +25,7 @@ internal fun RepoDetailContentBody(
             .fillMaxWidth()
             .verticalScroll(rememberScrollState()),
     ) {
-        RepoDetailHeader(repo = repo)
+        RepoDetailHeader(repo = repo, onOwnerClicked = onOwnerClicked)
         Spacer(modifier = Modifier.size(GheTheme.spacing.md))
         RepoDetailStatsRow(repo = repo)
         Spacer(modifier = Modifier.size(GheTheme.spacing.md))
@@ -37,6 +38,6 @@ internal fun RepoDetailContentBody(
 @Composable
 private fun RepoDetailContentBodyPreview() {
     GitHubExplorerPreviewContainer {
-        RepoDetailContentBody(repo = previewRepoDetails())
+        RepoDetailContentBody(repo = previewRepoDetails(), onOwnerClicked = {})
     }
 }

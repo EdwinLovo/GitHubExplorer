@@ -86,7 +86,10 @@ private fun RepoDetailScreenContent(
                     )
                 }
                 else -> {
-                    RepoDetailContentBody(repo = repo)
+                    RepoDetailContentBody(
+                        repo = repo,
+                        onOwnerClicked = { handleEvent(RepoDetailEvent.OnOwnerClicked) },
+                    )
                 }
             }
         }

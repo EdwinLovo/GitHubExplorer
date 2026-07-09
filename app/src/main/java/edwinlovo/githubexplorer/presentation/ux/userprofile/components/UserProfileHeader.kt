@@ -1,6 +1,5 @@
-package edwinlovo.githubexplorer.presentation.ux.repodetail.components
+package edwinlovo.githubexplorer.presentation.ux.userprofile.components
 
-import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
@@ -19,17 +18,16 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.style.TextOverflow
 import coil3.compose.AsyncImage
 import edwinlovo.githubexplorer.R
-import edwinlovo.githubexplorer.domain.model.response.repos.RepoDetails
+import edwinlovo.githubexplorer.domain.model.response.users.UserProfile
 import edwinlovo.githubexplorer.presentation.ui.theme.GheTheme
 import edwinlovo.githubexplorer.presentation.utils.GhePreview
 import edwinlovo.githubexplorer.presentation.utils.GitHubExplorerPreviewContainer
 import edwinlovo.githubexplorer.presentation.utils.MAX_LINES_SINGLE
-import edwinlovo.githubexplorer.presentation.ux.repodetail.utils.previewRepoDetails
+import edwinlovo.githubexplorer.presentation.ux.userprofile.utils.previewUserProfile
 
 @Composable
-internal fun RepoDetailHeader(
-    repo: RepoDetails,
-    onOwnerClicked: () -> Unit,
+internal fun UserProfileHeader(
+    user: UserProfile,
     modifier: Modifier = Modifier,
 ) {
     Column(
@@ -37,16 +35,10 @@ internal fun RepoDetailHeader(
             .fillMaxWidth()
             .padding(horizontal = GheTheme.padding.sm, vertical = GheTheme.padding.xxs),
     ) {
-        Row(
-            verticalAlignment = Alignment.CenterVertically,
-            modifier = Modifier
-                .fillMaxWidth()
-                .clickable { onOwnerClicked() }
-                .padding(vertical = GheTheme.padding.xxs),
-        ) {
+        Row(verticalAlignment = Alignment.CenterVertically) {
             AsyncImage(
-                model = repo.ownerAvatarUrl,
-                contentDescription = stringResource(R.string.repodetail_owner_avatar, repo.ownerLogin),
+                model = user.avatarUrl,
+                contentDescription = stringResource(R.string.userprofile_avatar, user.login),
                 modifier = Modifier
                     .size(GheTheme.iconSize.xxl)
                     .clip(CircleShape),
@@ -54,14 +46,14 @@ internal fun RepoDetailHeader(
             Spacer(modifier = Modifier.width(GheTheme.spacing.md))
             Column {
                 Text(
-                    text = repo.name,
+                    text = user.name?.takeIf { it.isNotBlank() } ?: user.login,
                     style = MaterialTheme.typography.titleLarge,
                     color = GheTheme.colors.textDefault,
                     maxLines = MAX_LINES_SINGLE,
                     overflow = TextOverflow.Ellipsis,
                 )
                 Text(
-                    text = repo.ownerLogin,
+                    text = user.login,
                     style = MaterialTheme.typography.bodyMedium,
                     color = GheTheme.colors.textMuted,
                     maxLines = MAX_LINES_SINGLE,
@@ -69,29 +61,29 @@ internal fun RepoDetailHeader(
                 )
             }
         }
-        Spacer(modifier = Modifier.size(GheTheme.spacing.md))
-        val description = repo.description?.takeIf { it.isNotBlank() }
-            ?: stringResource(R.string.repodetail_no_description)
-        Text(
-            text = description,
-            style = MaterialTheme.typography.bodyLarge,
-            color = if (repo.description.isNullOrBlank()) GheTheme.colors.textMuted else GheTheme.colors.textDefault,
-        )
+        user.bio?.takeIf { it.isNotBlank() }?.let { bio ->
+            Spacer(modifier = Modifier.size(GheTheme.spacing.md))
+            Text(
+                text = bio,
+                style = MaterialTheme.typography.bodyLarge,
+                color = GheTheme.colors.textDefault,
+            )
+        }
     }
 }
 
 @GhePreview
 @Composable
-private fun RepoDetailHeaderPreview() {
+private fun UserProfileHeaderPreview() {
     GitHubExplorerPreviewContainer {
-        RepoDetailHeader(repo = previewRepoDetails(), onOwnerClicked = {})
+        UserProfileHeader(user = previewUserProfile())
     }
 }
 
 @GhePreview
 @Composable
-private fun RepoDetailHeaderNoDescriptionPreview() {
+private fun UserProfileHeaderNoBioPreview() {
     GitHubExplorerPreviewContainer {
-        RepoDetailHeader(repo = previewRepoDetails().copy(description = null), onOwnerClicked = {})
+        UserProfileHeader(user = previewUserProfile().copy(bio = null, name = null))
     }
 }

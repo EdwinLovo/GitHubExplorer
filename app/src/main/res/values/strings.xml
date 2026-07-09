@@ -29,7 +29,16 @@
     <string name="repodetail_topics">Topics</string>
     <string name="repodetail_watchers">Watchers</string>
     <string name="retry">Retry</string>
-    <string name="user_profile_placeholder">User profile coming soon</string>
+    <string name="userprofile_avatar">%1$s avatar</string>
+    <string name="userprofile_back">Back</string>
+    <string name="userprofile_blog">Blog: %1$s</string>
+    <string name="userprofile_company">Company: %1$s</string>
+    <string name="userprofile_followers">Followers</string>
+    <string name="userprofile_following">Following</string>
+    <string name="userprofile_location">Location: %1$s</string>
+    <string name="userprofile_public_repos">Repos</string>
+    <string name="userprofile_repos_empty">No public repositories</string>
+    <string name="userprofile_repos_title">Repositories</string>
     <string name="users_empty_results">No users found</string>
     <string name="users_idle_prompt">Search for developers and organizations</string>
     <string name="users_search_clear">Clear search</string>

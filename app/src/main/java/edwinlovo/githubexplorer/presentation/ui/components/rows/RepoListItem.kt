@@ -1,4 +1,4 @@
-package edwinlovo.githubexplorer.presentation.ux.explore.components
+package edwinlovo.githubexplorer.presentation.ui.components.rows
 
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
@@ -30,7 +30,6 @@ import edwinlovo.githubexplorer.presentation.utils.GheIcons
 import edwinlovo.githubexplorer.presentation.utils.GhePreview
 import edwinlovo.githubexplorer.presentation.utils.GitHubExplorerPreviewContainer
 import edwinlovo.githubexplorer.presentation.utils.MAX_LINES_SINGLE
-import edwinlovo.githubexplorer.presentation.ux.explore.utils.previewRepos
 
 private const val DESCRIPTION_MAX_LINES = 2
 
@@ -118,6 +117,18 @@ internal fun RepoListItem(
 @Composable
 private fun RepoListItemPreview() {
     GitHubExplorerPreviewContainer {
-        RepoListItem(repo = previewRepos().first(), onClick = {})
+        RepoListItem(
+            repo = GithubRepo(
+                id = 1L,
+                name = "compose-samples",
+                fullName = "android/compose-samples",
+                ownerLogin = "android",
+                ownerAvatarUrl = "https://avatars.githubusercontent.com/u/32689599",
+                description = "Official Jetpack Compose samples.",
+                stargazersCount = 20_912,
+                language = "Kotlin",
+            ),
+            onClick = {},
+        )
     }
 }

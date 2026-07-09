@@ -7,6 +7,7 @@ import dagger.hilt.components.SingletonComponent
 import edwinlovo.githubexplorer.BuildConfig
 import edwinlovo.githubexplorer.data.remote.api.RepoApi
 import edwinlovo.githubexplorer.data.remote.api.SearchApi
+import edwinlovo.githubexplorer.data.remote.api.UserApi
 import kotlinx.serialization.json.Json
 import okhttp3.MediaType.Companion.toMediaType
 import okhttp3.OkHttpClient
@@ -55,4 +56,8 @@ object ApiModule {
     @Provides
     @Singleton
     fun provideRepoApi(retrofit: Retrofit): RepoApi = retrofit.create(RepoApi::class.java)
+
+    @Provides
+    @Singleton
+    fun provideUserApi(retrofit: Retrofit): UserApi = retrofit.create(UserApi::class.java)
 }
