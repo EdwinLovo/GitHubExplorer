@@ -18,6 +18,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
+import androidx.compose.ui.graphics.painter.ColorPainter
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.style.TextOverflow
@@ -47,9 +48,12 @@ internal fun RepoListItem(
                 .padding(horizontal = GheTheme.padding.sm, vertical = GheTheme.padding.xxs),
             verticalAlignment = Alignment.Top,
         ) {
+            val avatarPlaceholder = ColorPainter(GheTheme.colors.backgroundMuted)
             AsyncImage(
                 model = repo.ownerAvatarUrl,
                 contentDescription = stringResource(R.string.explore_repo_avatar, repo.ownerLogin),
+                placeholder = avatarPlaceholder,
+                error = avatarPlaceholder,
                 modifier = Modifier
                     .size(GheTheme.iconSize.xl)
                     .clip(CircleShape),

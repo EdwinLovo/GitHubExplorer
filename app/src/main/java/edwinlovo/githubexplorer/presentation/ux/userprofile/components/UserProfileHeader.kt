@@ -14,6 +14,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
+import androidx.compose.ui.graphics.painter.ColorPainter
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.style.TextOverflow
 import coil3.compose.AsyncImage
@@ -36,9 +37,12 @@ internal fun UserProfileHeader(
             .padding(horizontal = GheTheme.padding.sm, vertical = GheTheme.padding.xxs),
     ) {
         Row(verticalAlignment = Alignment.CenterVertically) {
+            val avatarPlaceholder = ColorPainter(GheTheme.colors.backgroundMuted)
             AsyncImage(
                 model = user.avatarUrl,
                 contentDescription = stringResource(R.string.userprofile_avatar, user.login),
+                placeholder = avatarPlaceholder,
+                error = avatarPlaceholder,
                 modifier = Modifier
                     .size(GheTheme.iconSize.xxl)
                     .clip(CircleShape),

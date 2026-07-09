@@ -15,6 +15,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
+import androidx.compose.ui.graphics.painter.ColorPainter
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.style.TextOverflow
 import coil3.compose.AsyncImage
@@ -44,9 +45,12 @@ internal fun RepoDetailHeader(
                 .clickable { onOwnerClicked() }
                 .padding(vertical = GheTheme.padding.xxs),
         ) {
+            val avatarPlaceholder = ColorPainter(GheTheme.colors.backgroundMuted)
             AsyncImage(
                 model = repo.ownerAvatarUrl,
                 contentDescription = stringResource(R.string.repodetail_owner_avatar, repo.ownerLogin),
+                placeholder = avatarPlaceholder,
+                error = avatarPlaceholder,
                 modifier = Modifier
                     .size(GheTheme.iconSize.xxl)
                     .clip(CircleShape),
