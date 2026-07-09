@@ -14,6 +14,7 @@ import edwinlovo.githubexplorer.R
 object GheIcons {
     val ArrowBack = R.drawable.ic_arrow_back
     val Close = R.drawable.ic_close
+    val Delete = R.drawable.ic_delete
     val Eye = R.drawable.ic_eye
     val Favorite = R.drawable.ic_favorite
     val FavoriteOutline = R.drawable.ic_favorite_outline

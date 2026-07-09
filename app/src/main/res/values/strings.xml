@@ -11,6 +11,7 @@
     <string name="explore_search_clear">Clear search</string>
     <string name="explore_search_placeholder">Search repositories</string>
     <string name="favorites_empty">No favorites yet — find repos in Explore</string>
+    <string name="favorites_remove">Remove favorite</string>
     <string name="generic_error">Something went wrong. Please try again.</string>
     <string name="nav_tab_explore">Explore</string>
     <string name="nav_tab_favorites">Favorites</string>

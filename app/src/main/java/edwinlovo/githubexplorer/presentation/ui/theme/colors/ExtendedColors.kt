@@ -37,6 +37,7 @@ interface ExtendedColors {
     // Icon
     val iconDefault: Color
     val iconMuted: Color
+    val iconOnDestructive: Color
     val iconPrimary: Color
 
     // Transparent — for explicit "no color" cases
@@ -68,6 +69,7 @@ internal val lightAppColors: ExtendedColors = object : ExtendedColors {
 
     override val iconDefault = PrimitiveColors.slate900
     override val iconMuted = PrimitiveColors.slate500
+    override val iconOnDestructive = PrimitiveColors.white
     override val iconPrimary = PrimitiveColors.primary500
 
     override val transparent = PrimitiveColors.transparent
@@ -98,6 +100,7 @@ internal val darkAppColors: ExtendedColors = object : ExtendedColors {
 
     override val iconDefault = PrimitiveColors.white
     override val iconMuted = PrimitiveColors.slate500
+    override val iconOnDestructive = PrimitiveColors.white
     override val iconPrimary = PrimitiveColors.primary500
 
     override val transparent = PrimitiveColors.transparent
