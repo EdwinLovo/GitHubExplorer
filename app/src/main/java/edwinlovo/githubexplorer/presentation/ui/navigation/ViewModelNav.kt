@@ -14,6 +14,7 @@ interface ViewModelNav {
     val navigationActionFlow: StateFlow<NavigationAction?>
 
     fun navigate(route: NavigationRoute)
+    fun navigateToTab(route: NavigationRoute)
     fun navigateAndPop(route: NavigationRoute, popUpToRoute: NavigationRoute, inclusive: Boolean)
     fun resetNavigate(action: NavigationAction)
     fun popBackStack(route: NavigationRoute? = null, inclusive: Boolean = false)
@@ -36,6 +37,9 @@ internal class ViewModelNavImpl : ViewModelNav {
 
     override fun navigate(route: NavigationRoute) {
         _navigationActionFlow.compareAndSet(null, NavigationAction.Navigate(route))
+    }
+    override fun navigateToTab(route: NavigationRoute) {
+        _navigationActionFlow.compareAndSet(null, NavigationAction.NavigateToTab(route))
     }
     override fun navigateAndPop(route: NavigationRoute, popUpToRoute: NavigationRoute, inclusive: Boolean) {
         _navigationActionFlow.compareAndSet(null, NavigationAction.NavigateAndPop(route, popUpToRoute, inclusive))

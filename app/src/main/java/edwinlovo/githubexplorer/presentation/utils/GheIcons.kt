@@ -22,4 +22,5 @@ object GheIcons {
     val OpenInNew = R.drawable.ic_open_in_new
     val Search = R.drawable.ic_search
     val Star = R.drawable.ic_star
+    val Users = R.drawable.ic_users
 }

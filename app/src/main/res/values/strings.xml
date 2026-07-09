@@ -8,7 +8,11 @@
     <string name="explore_repo_stars">Stars</string>
     <string name="explore_search_clear">Clear search</string>
     <string name="explore_search_placeholder">Search repositories</string>
+    <string name="favorites_empty">No favorites yet — find repos in Explore</string>
     <string name="generic_error">Something went wrong. Please try again.</string>
+    <string name="nav_tab_explore">Explore</string>
+    <string name="nav_tab_favorites">Favorites</string>
+    <string name="nav_tab_users">Users</string>
     <string name="repodetail_back">Back</string>
     <string name="repodetail_favorite_add">Add to favorites</string>
     <string name="repodetail_favorite_remove">Remove from favorites</string>
@@ -23,4 +27,5 @@
     <string name="repodetail_topics">Topics</string>
     <string name="repodetail_watchers">Watchers</string>
     <string name="retry">Retry</string>
+    <string name="users_placeholder">User search coming soon</string>
 </resources>

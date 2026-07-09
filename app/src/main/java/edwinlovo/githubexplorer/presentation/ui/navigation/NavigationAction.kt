@@ -2,11 +2,23 @@ package edwinlovo.githubexplorer.presentation.ui.navigation
 
 import android.annotation.SuppressLint
 import androidx.navigation.NavController
+import androidx.navigation.NavGraph.Companion.findStartDestination
 
 sealed interface NavigationAction {
     data class Navigate(private val route: NavigationRoute) : NavigationAction {
         fun invoke(navController: NavController, resetNavigate: (NavigationAction) -> Unit) {
             navController.navigate(route)
+            resetNavigate(this)
+        }
+    }
+
+    data class NavigateToTab(private val route: NavigationRoute) : NavigationAction {
+        fun invoke(navController: NavController, resetNavigate: (NavigationAction) -> Unit) {
+            navController.navigate(route) {
+                popUpTo(navController.graph.findStartDestination().id) { saveState = true }
+                launchSingleTop = true
+                restoreState = true
+            }
             resetNavigate(this)
         }
     }
@@ -94,6 +106,7 @@ internal fun NavigationAction.navigate(
 ) {
     when (this) {
         is NavigationAction.Navigate -> invoke(navController, resetNavigate)
+        is NavigationAction.NavigateToTab -> invoke(navController, resetNavigate)
         is NavigationAction.NavigateAndPop -> invoke(navController, resetNavigate)
         is NavigationAction.PopBackStack -> invoke(navController, resetNavigate)
         is NavigationAction.PopBackStackAndNavigate -> invoke(navController, resetNavigate)
