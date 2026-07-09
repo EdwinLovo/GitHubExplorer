@@ -18,6 +18,7 @@ object GheIcons {
     val Eye = R.drawable.ic_eye
     val Favorite = R.drawable.ic_favorite
     val FavoriteOutline = R.drawable.ic_favorite_outline
+    val Filter = R.drawable.ic_filter
     val Fork = R.drawable.ic_fork
     val Issue = R.drawable.ic_issue
     val OpenInNew = R.drawable.ic_open_in_new

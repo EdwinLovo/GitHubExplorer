@@ -11,6 +11,7 @@ fun GheScaffold(
     modifier: Modifier = Modifier,
     topBar: @Composable (() -> Unit)? = null,
     bottomBar: @Composable (() -> Unit)? = null,
+    snackbarHost: @Composable (() -> Unit)? = null,
     content: @Composable (PaddingValues) -> Unit,
 ) {
     Scaffold(
@@ -18,6 +19,7 @@ fun GheScaffold(
         containerColor = GheTheme.colors.backgroundDefault,
         topBar = topBar ?: {},
         bottomBar = bottomBar ?: {},
+        snackbarHost = snackbarHost ?: {},
         content = content,
     )
 }

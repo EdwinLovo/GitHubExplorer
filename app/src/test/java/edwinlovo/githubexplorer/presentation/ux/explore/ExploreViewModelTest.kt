@@ -9,6 +9,7 @@ import edwinlovo.githubexplorer.presentation.ui.navigation.NavigationAction
 import edwinlovo.githubexplorer.presentation.utils.DEBOUNCE_TIME
 import edwinlovo.githubexplorer.presentation.ux.explore.contracts.ExploreEvent
 import edwinlovo.githubexplorer.presentation.ux.repodetail.RepoDetailRoute
+import edwinlovo.githubexplorer.presentation.ux.searchfilters.SearchFiltersRoute
 import edwinlovo.githubexplorer.testutil.MainDispatcherRule
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.cancel
@@ -119,6 +120,62 @@ class ExploreViewModelTest {
 
             cancelAndIgnoreRemainingEvents()
         }
+    }
+
+    @Test
+    fun handleEventOnFilterClickedEmitsNavigateToSearchFilters() = runTest(mainDispatcherRule.dispatcher) {
+        viewModel.navigationActionFlow.test {
+            assertThat(awaitItem()).isNull()
+
+            viewModel.handleEvent(ExploreEvent.OnFilterClicked)
+
+            val action = awaitItem()
+            assertThat(action).isEqualTo(
+                NavigationAction.Navigate(SearchFiltersRoute(language = ""))
+            )
+
+            cancelAndIgnoreRemainingEvents()
+        }
+    }
+
+    @Test
+    fun handleEventOnLanguageFilterResultSetsFilterAndSnackbarFlag() = runTest(mainDispatcherRule.dispatcher) {
+        viewModel.handleEvent(ExploreEvent.OnLanguageFilterResult("kotlin"))
+
+        assertThat(viewModel.uiState.value.languageFilter).isEqualTo("kotlin")
+        assertThat(viewModel.uiState.value.showFilterSnackbar).isTrue()
+    }
+
+    @Test
+    fun handleEventOnFilterSnackbarShownClearsFlag() = runTest(mainDispatcherRule.dispatcher) {
+        viewModel.handleEvent(ExploreEvent.OnLanguageFilterResult("kotlin"))
+        viewModel.handleEvent(ExploreEvent.OnFilterSnackbarShown)
+
+        assertThat(viewModel.uiState.value.showFilterSnackbar).isFalse()
+    }
+
+    @Test
+    fun reposAppendsLanguageQualifierToNonBlankQuery() = runTest(mainDispatcherRule.dispatcher) {
+        backgroundScope.launch { viewModel.repos.collect {} }
+        advanceUntilIdle()
+
+        viewModel.handleEvent(ExploreEvent.OnLanguageFilterResult("kotlin"))
+        viewModel.handleEvent(ExploreEvent.OnSearchQueryChanged("http"))
+        advanceTimeBy(DEBOUNCE_TIME + 1)
+        advanceUntilIdle()
+
+        assertThat(repository.requestedQueries).contains("http language:kotlin")
+    }
+
+    @Test
+    fun reposRequestsLanguageOnlyQueryWhenSearchBlank() = runTest(mainDispatcherRule.dispatcher) {
+        backgroundScope.launch { viewModel.repos.collect {} }
+        advanceUntilIdle()
+
+        viewModel.handleEvent(ExploreEvent.OnLanguageFilterResult("kotlin"))
+        advanceUntilIdle()
+
+        assertThat(repository.requestedQueries).contains("language:kotlin")
     }
 
     private fun sampleRepos(): List<GithubRepo> = listOf(

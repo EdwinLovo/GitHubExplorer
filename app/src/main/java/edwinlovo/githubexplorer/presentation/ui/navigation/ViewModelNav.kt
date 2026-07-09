@@ -92,3 +92,15 @@ fun NavController.ObserveBooleanResult(key: String, onResult: () -> Unit) {
         }
     }
 }
+
+@Composable
+fun <T> NavController.ObserveResult(key: String, onResult: (T) -> Unit) {
+    val backStackEntry by currentBackStackEntryAsState()
+    val result = backStackEntry?.savedStateHandle?.getStateFlow<T?>(key, null)?.collectAsStateWithLifecycle()
+    LaunchedEffect(result?.value) {
+        result?.value?.let { value ->
+            backStackEntry?.savedStateHandle?.set(key, null)   // consume once
+            onResult(value)
+        }
+    }
+}

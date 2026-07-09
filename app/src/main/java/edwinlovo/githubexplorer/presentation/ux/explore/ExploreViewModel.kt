@@ -15,6 +15,7 @@ import edwinlovo.githubexplorer.presentation.utils.ext.reduce
 import edwinlovo.githubexplorer.presentation.ux.explore.contracts.ExploreEvent
 import edwinlovo.githubexplorer.presentation.ux.explore.contracts.ExploreUiState
 import edwinlovo.githubexplorer.presentation.ux.repodetail.RepoDetailRoute
+import edwinlovo.githubexplorer.presentation.ux.searchfilters.SearchFiltersRoute
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.FlowPreview
 import kotlinx.coroutines.flow.Flow
@@ -36,10 +37,12 @@ class ExploreViewModel @Inject constructor(
 
     @OptIn(FlowPreview::class, ExperimentalCoroutinesApi::class)
     val repos: Flow<PagingData<GithubRepo>> = uiState
-        .map { it.searchQuery }
+        .map { it.searchQuery to it.languageFilter }
         .distinctUntilChanged()
-        .debounce { if (it.isBlank()) 0L else DEBOUNCE_TIME }
-        .flatMapLatest { query -> searchRepository.searchRepositories(query) }
+        .debounce { (query, _) -> if (query.isBlank()) 0L else DEBOUNCE_TIME }
+        .flatMapLatest { (query, language) ->
+            searchRepository.searchRepositories(composeQuery(query, language))
+        }
         .cachedIn(viewModelScope)
 
     fun handleEvent(event: ExploreEvent) {
@@ -47,6 +50,9 @@ class ExploreViewModel @Inject constructor(
             is ExploreEvent.OnSearchQueryChanged -> setSearchQuery(event.query)
             is ExploreEvent.OnClearSearchQuery -> clearSearchQuery()
             is ExploreEvent.OnRepoClicked -> navigateToRepoDetail(event.repo)
+            is ExploreEvent.OnFilterClicked -> navigateToSearchFilters()
+            is ExploreEvent.OnLanguageFilterResult -> applyLanguageFilter(event.language)
+            is ExploreEvent.OnFilterSnackbarShown -> clearFilterSnackbar()
         }
     }
 
@@ -60,5 +66,27 @@ class ExploreViewModel @Inject constructor(
 
     private fun navigateToRepoDetail(repo: GithubRepo) {
         navigate(RepoDetailRoute(owner = repo.ownerLogin, repo = repo.name))
+    }
+
+    private fun navigateToSearchFilters() {
+        navigate(SearchFiltersRoute(language = uiState.value.languageFilter))
+    }
+
+    private fun applyLanguageFilter(language: String) {
+        uiState.reduce { copy(languageFilter = language, showFilterSnackbar = true) }
+    }
+
+    private fun clearFilterSnackbar() {
+        uiState.reduce { copy(showFilterSnackbar = false) }
+    }
+
+    private fun composeQuery(query: String, language: String): String = when {
+        language.isBlank() -> query
+        query.isBlank() -> "$LANGUAGE_QUALIFIER$language"
+        else -> "$query $LANGUAGE_QUALIFIER$language"
+    }
+
+    companion object {
+        private const val LANGUAGE_QUALIFIER = "language:"
     }
 }
